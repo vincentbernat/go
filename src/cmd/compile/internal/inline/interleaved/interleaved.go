@@ -265,6 +265,14 @@ func (s *inlClosureState) mark(n ir.Node) ir.Node {
 		n = p.X // in this case p was copied in from a (marked) inlined function, this is a new unvisited node.
 	}
 
+	if r := rewriteAddrFrom16As16(n); r != nil {
+		if p != nil {
+			p.X = r
+			return p
+		}
+		return r
+	}
+
 	ok := match(n)
 
 	// can't wrap TailCall's child into ParenExpr
