@@ -83,6 +83,24 @@ func PostLookupCleanup() {
 	readBodies(typecheck.Target, false, nil)
 }
 
+func lookupVar(pkg *types.Pkg, symName string) (*ir.Name, error) {
+	sym := pkg.Lookup(symName)
+
+	pri, ok := objReader[sym]
+	if !ok {
+		return nil, fmt.Errorf("var sym %v missing objReader", sym)
+	}
+	node, err := pri.pr.objIdxMayFail(pri.idx, nil, nil, false)
+	if err != nil {
+		return nil, fmt.Errorf("var sym %v lookup error: %w", sym, err)
+	}
+	name := node.(*ir.Name)
+	if name.Op() != ir.ONAME || name.Class != ir.PEXTERN {
+		return nil, fmt.Errorf("var sym %v refers to non-variable name: %v", sym, name)
+	}
+	return name, nil
+}
+
 func lookupFunction(pkg *types.Pkg, symName string) (*ir.Func, error) {
 	sym := pkg.Lookup(symName)
 

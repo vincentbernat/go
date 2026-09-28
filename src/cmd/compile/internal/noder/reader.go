@@ -1837,10 +1837,17 @@ func (r *reader) stmt1(tag codeStmt, out *ir.Nodes) ir.Node {
 				stmt.DeferAt = x.(ir.Expr)
 			}
 		}
+		if call.Op() == ir.OSTRUCTLIT {
+			return discardAddrFrom16As16(pos, call)
+		}
 		return stmt
 
 	case stmtExpr:
-		return r.expr()
+		n := r.expr()
+		if n.Op() == ir.OSTRUCTLIT {
+			return discardAddrFrom16As16(n.Pos(), n)
+		}
+		return n
 
 	case stmtFor:
 		return r.forStmt(label)
@@ -2503,6 +2510,9 @@ func (r *reader) expr() (res ir.Node) {
 		case ir.OUNSAFESLICE:
 			n := n.(*ir.BinaryExpr)
 			n.RType = r.rtype(pos)
+		}
+		if lit := rewriteAddrFrom16As16(n); lit != nil {
+			return lit
 		}
 		return n
 
