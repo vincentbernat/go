@@ -435,6 +435,7 @@ var passes = [...]ssa.Pass{
 	{Name: "decompose builtin", Fn: postExpandCallsDecompose, Required: true},
 	{Name: "softfloat", Fn: softfloat, Required: true},
 	{Name: "branchelim", Fn: branchelim},
+	{Name: "early memcombine", Fn: memcombine},
 	{Name: "late opt", Fn: opt, Required: true},
 	{Name: "dead auto elim", Fn: elimDeadAutosGeneric},
 	{Name: "sccp", Fn: sccp},
@@ -555,6 +556,10 @@ var passOrder = [...]constraint{
 	{"late fuse", "memcombine"},
 	// memcombine is a arch-independent pass.
 	{"memcombine", "lower"},
+	// memcombine finds more loads to merge once slices are decomposed.
+	{"decompose builtin", "early memcombine"},
+	// late opt forwards loads through moves. Merged loads are forwarded better.
+	{"early memcombine", "late opt"},
 	// late opt transform some CondSelects into math.
 	{"branchelim", "late opt"},
 	// branchelim is an arch-independent pass.
