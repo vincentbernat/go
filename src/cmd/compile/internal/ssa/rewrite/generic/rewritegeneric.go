@@ -14752,6 +14752,1020 @@ func rewriteValue_OpLoad(v *ssa.Value) bool {
 		v.CopyOf(x)
 		return true
 	}
+	// match: (Load <t1> p1 (Store {t2} p2 _ (Store {t3} p3 _ (Store {t4} p4 _ (Store {t5} p5 _ (Store {t6} p6 x _))))))
+	// cond: ssa.IsSamePtr(p1, p6) && copyCompatibleType(t1, x.Type) && t1.Size() == t6.Size() && ssa.Disjoint(p6, t6, p2, t2) && ssa.Disjoint(p6, t6, p3, t3) && ssa.Disjoint(p6, t6, p4, t4) && ssa.Disjoint(p6, t6, p5, t5)
+	// result: x
+	for {
+		t1 := v.Type
+		p1 := v_0
+		if v_1.Op != ssaop.OpStore {
+			break
+		}
+		t2 := ssa.AuxToType(v_1.Aux)
+		_ = v_1.Args[2]
+		p2 := v_1.Args[0]
+		v_1_2 := v_1.Args[2]
+		if v_1_2.Op != ssaop.OpStore {
+			break
+		}
+		t3 := ssa.AuxToType(v_1_2.Aux)
+		_ = v_1_2.Args[2]
+		p3 := v_1_2.Args[0]
+		v_1_2_2 := v_1_2.Args[2]
+		if v_1_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t4 := ssa.AuxToType(v_1_2_2.Aux)
+		_ = v_1_2_2.Args[2]
+		p4 := v_1_2_2.Args[0]
+		v_1_2_2_2 := v_1_2_2.Args[2]
+		if v_1_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t5 := ssa.AuxToType(v_1_2_2_2.Aux)
+		_ = v_1_2_2_2.Args[2]
+		p5 := v_1_2_2_2.Args[0]
+		v_1_2_2_2_2 := v_1_2_2_2.Args[2]
+		if v_1_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t6 := ssa.AuxToType(v_1_2_2_2_2.Aux)
+		x := v_1_2_2_2_2.Args[1]
+		p6 := v_1_2_2_2_2.Args[0]
+		if !(ssa.IsSamePtr(p1, p6) && copyCompatibleType(t1, x.Type) && t1.Size() == t6.Size() && ssa.Disjoint(p6, t6, p2, t2) && ssa.Disjoint(p6, t6, p3, t3) && ssa.Disjoint(p6, t6, p4, t4) && ssa.Disjoint(p6, t6, p5, t5)) {
+			break
+		}
+		v.CopyOf(x)
+		return true
+	}
+	// match: (Load <t1> p1 (Store {t2} p2 _ (Store {t3} p3 _ (Store {t4} p4 _ (Store {t5} p5 _ (Store {t6} p6 _ (Store {t7} p7 x _)))))))
+	// cond: ssa.IsSamePtr(p1, p7) && copyCompatibleType(t1, x.Type) && t1.Size() == t7.Size() && ssa.Disjoint(p7, t7, p2, t2) && ssa.Disjoint(p7, t7, p3, t3) && ssa.Disjoint(p7, t7, p4, t4) && ssa.Disjoint(p7, t7, p5, t5) && ssa.Disjoint(p7, t7, p6, t6)
+	// result: x
+	for {
+		t1 := v.Type
+		p1 := v_0
+		if v_1.Op != ssaop.OpStore {
+			break
+		}
+		t2 := ssa.AuxToType(v_1.Aux)
+		_ = v_1.Args[2]
+		p2 := v_1.Args[0]
+		v_1_2 := v_1.Args[2]
+		if v_1_2.Op != ssaop.OpStore {
+			break
+		}
+		t3 := ssa.AuxToType(v_1_2.Aux)
+		_ = v_1_2.Args[2]
+		p3 := v_1_2.Args[0]
+		v_1_2_2 := v_1_2.Args[2]
+		if v_1_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t4 := ssa.AuxToType(v_1_2_2.Aux)
+		_ = v_1_2_2.Args[2]
+		p4 := v_1_2_2.Args[0]
+		v_1_2_2_2 := v_1_2_2.Args[2]
+		if v_1_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t5 := ssa.AuxToType(v_1_2_2_2.Aux)
+		_ = v_1_2_2_2.Args[2]
+		p5 := v_1_2_2_2.Args[0]
+		v_1_2_2_2_2 := v_1_2_2_2.Args[2]
+		if v_1_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t6 := ssa.AuxToType(v_1_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2.Args[2]
+		p6 := v_1_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2 := v_1_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t7 := ssa.AuxToType(v_1_2_2_2_2_2.Aux)
+		x := v_1_2_2_2_2_2.Args[1]
+		p7 := v_1_2_2_2_2_2.Args[0]
+		if !(ssa.IsSamePtr(p1, p7) && copyCompatibleType(t1, x.Type) && t1.Size() == t7.Size() && ssa.Disjoint(p7, t7, p2, t2) && ssa.Disjoint(p7, t7, p3, t3) && ssa.Disjoint(p7, t7, p4, t4) && ssa.Disjoint(p7, t7, p5, t5) && ssa.Disjoint(p7, t7, p6, t6)) {
+			break
+		}
+		v.CopyOf(x)
+		return true
+	}
+	// match: (Load <t1> p1 (Store {t2} p2 _ (Store {t3} p3 _ (Store {t4} p4 _ (Store {t5} p5 _ (Store {t6} p6 _ (Store {t7} p7 _ (Store {t8} p8 x _))))))))
+	// cond: ssa.IsSamePtr(p1, p8) && copyCompatibleType(t1, x.Type) && t1.Size() == t8.Size() && ssa.Disjoint(p8, t8, p2, t2) && ssa.Disjoint(p8, t8, p3, t3) && ssa.Disjoint(p8, t8, p4, t4) && ssa.Disjoint(p8, t8, p5, t5) && ssa.Disjoint(p8, t8, p6, t6) && ssa.Disjoint(p8, t8, p7, t7)
+	// result: x
+	for {
+		t1 := v.Type
+		p1 := v_0
+		if v_1.Op != ssaop.OpStore {
+			break
+		}
+		t2 := ssa.AuxToType(v_1.Aux)
+		_ = v_1.Args[2]
+		p2 := v_1.Args[0]
+		v_1_2 := v_1.Args[2]
+		if v_1_2.Op != ssaop.OpStore {
+			break
+		}
+		t3 := ssa.AuxToType(v_1_2.Aux)
+		_ = v_1_2.Args[2]
+		p3 := v_1_2.Args[0]
+		v_1_2_2 := v_1_2.Args[2]
+		if v_1_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t4 := ssa.AuxToType(v_1_2_2.Aux)
+		_ = v_1_2_2.Args[2]
+		p4 := v_1_2_2.Args[0]
+		v_1_2_2_2 := v_1_2_2.Args[2]
+		if v_1_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t5 := ssa.AuxToType(v_1_2_2_2.Aux)
+		_ = v_1_2_2_2.Args[2]
+		p5 := v_1_2_2_2.Args[0]
+		v_1_2_2_2_2 := v_1_2_2_2.Args[2]
+		if v_1_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t6 := ssa.AuxToType(v_1_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2.Args[2]
+		p6 := v_1_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2 := v_1_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t7 := ssa.AuxToType(v_1_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2.Args[2]
+		p7 := v_1_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2 := v_1_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t8 := ssa.AuxToType(v_1_2_2_2_2_2_2.Aux)
+		x := v_1_2_2_2_2_2_2.Args[1]
+		p8 := v_1_2_2_2_2_2_2.Args[0]
+		if !(ssa.IsSamePtr(p1, p8) && copyCompatibleType(t1, x.Type) && t1.Size() == t8.Size() && ssa.Disjoint(p8, t8, p2, t2) && ssa.Disjoint(p8, t8, p3, t3) && ssa.Disjoint(p8, t8, p4, t4) && ssa.Disjoint(p8, t8, p5, t5) && ssa.Disjoint(p8, t8, p6, t6) && ssa.Disjoint(p8, t8, p7, t7)) {
+			break
+		}
+		v.CopyOf(x)
+		return true
+	}
+	// match: (Load <t1> p1 (Store {t2} p2 _ (Store {t3} p3 _ (Store {t4} p4 _ (Store {t5} p5 _ (Store {t6} p6 _ (Store {t7} p7 _ (Store {t8} p8 _ (Store {t9} p9 x _)))))))))
+	// cond: ssa.IsSamePtr(p1, p9) && copyCompatibleType(t1, x.Type) && t1.Size() == t9.Size() && ssa.Disjoint(p9, t9, p2, t2) && ssa.Disjoint(p9, t9, p3, t3) && ssa.Disjoint(p9, t9, p4, t4) && ssa.Disjoint(p9, t9, p5, t5) && ssa.Disjoint(p9, t9, p6, t6) && ssa.Disjoint(p9, t9, p7, t7) && ssa.Disjoint(p9, t9, p8, t8)
+	// result: x
+	for {
+		t1 := v.Type
+		p1 := v_0
+		if v_1.Op != ssaop.OpStore {
+			break
+		}
+		t2 := ssa.AuxToType(v_1.Aux)
+		_ = v_1.Args[2]
+		p2 := v_1.Args[0]
+		v_1_2 := v_1.Args[2]
+		if v_1_2.Op != ssaop.OpStore {
+			break
+		}
+		t3 := ssa.AuxToType(v_1_2.Aux)
+		_ = v_1_2.Args[2]
+		p3 := v_1_2.Args[0]
+		v_1_2_2 := v_1_2.Args[2]
+		if v_1_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t4 := ssa.AuxToType(v_1_2_2.Aux)
+		_ = v_1_2_2.Args[2]
+		p4 := v_1_2_2.Args[0]
+		v_1_2_2_2 := v_1_2_2.Args[2]
+		if v_1_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t5 := ssa.AuxToType(v_1_2_2_2.Aux)
+		_ = v_1_2_2_2.Args[2]
+		p5 := v_1_2_2_2.Args[0]
+		v_1_2_2_2_2 := v_1_2_2_2.Args[2]
+		if v_1_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t6 := ssa.AuxToType(v_1_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2.Args[2]
+		p6 := v_1_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2 := v_1_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t7 := ssa.AuxToType(v_1_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2.Args[2]
+		p7 := v_1_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2 := v_1_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t8 := ssa.AuxToType(v_1_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2.Args[2]
+		p8 := v_1_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t9 := ssa.AuxToType(v_1_2_2_2_2_2_2_2.Aux)
+		x := v_1_2_2_2_2_2_2_2.Args[1]
+		p9 := v_1_2_2_2_2_2_2_2.Args[0]
+		if !(ssa.IsSamePtr(p1, p9) && copyCompatibleType(t1, x.Type) && t1.Size() == t9.Size() && ssa.Disjoint(p9, t9, p2, t2) && ssa.Disjoint(p9, t9, p3, t3) && ssa.Disjoint(p9, t9, p4, t4) && ssa.Disjoint(p9, t9, p5, t5) && ssa.Disjoint(p9, t9, p6, t6) && ssa.Disjoint(p9, t9, p7, t7) && ssa.Disjoint(p9, t9, p8, t8)) {
+			break
+		}
+		v.CopyOf(x)
+		return true
+	}
+	// match: (Load <t1> p1 (Store {t2} p2 _ (Store {t3} p3 _ (Store {t4} p4 _ (Store {t5} p5 _ (Store {t6} p6 _ (Store {t7} p7 _ (Store {t8} p8 _ (Store {t9} p9 _ (Store {t10} p10 x _))))))))))
+	// cond: ssa.IsSamePtr(p1, p10) && copyCompatibleType(t1, x.Type) && t1.Size() == t10.Size() && ssa.Disjoint(p10, t10, p2, t2) && ssa.Disjoint(p10, t10, p3, t3) && ssa.Disjoint(p10, t10, p4, t4) && ssa.Disjoint(p10, t10, p5, t5) && ssa.Disjoint(p10, t10, p6, t6) && ssa.Disjoint(p10, t10, p7, t7) && ssa.Disjoint(p10, t10, p8, t8) && ssa.Disjoint(p10, t10, p9, t9)
+	// result: x
+	for {
+		t1 := v.Type
+		p1 := v_0
+		if v_1.Op != ssaop.OpStore {
+			break
+		}
+		t2 := ssa.AuxToType(v_1.Aux)
+		_ = v_1.Args[2]
+		p2 := v_1.Args[0]
+		v_1_2 := v_1.Args[2]
+		if v_1_2.Op != ssaop.OpStore {
+			break
+		}
+		t3 := ssa.AuxToType(v_1_2.Aux)
+		_ = v_1_2.Args[2]
+		p3 := v_1_2.Args[0]
+		v_1_2_2 := v_1_2.Args[2]
+		if v_1_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t4 := ssa.AuxToType(v_1_2_2.Aux)
+		_ = v_1_2_2.Args[2]
+		p4 := v_1_2_2.Args[0]
+		v_1_2_2_2 := v_1_2_2.Args[2]
+		if v_1_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t5 := ssa.AuxToType(v_1_2_2_2.Aux)
+		_ = v_1_2_2_2.Args[2]
+		p5 := v_1_2_2_2.Args[0]
+		v_1_2_2_2_2 := v_1_2_2_2.Args[2]
+		if v_1_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t6 := ssa.AuxToType(v_1_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2.Args[2]
+		p6 := v_1_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2 := v_1_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t7 := ssa.AuxToType(v_1_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2.Args[2]
+		p7 := v_1_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2 := v_1_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t8 := ssa.AuxToType(v_1_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2.Args[2]
+		p8 := v_1_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t9 := ssa.AuxToType(v_1_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2.Args[2]
+		p9 := v_1_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t10 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2.Aux)
+		x := v_1_2_2_2_2_2_2_2_2.Args[1]
+		p10 := v_1_2_2_2_2_2_2_2_2.Args[0]
+		if !(ssa.IsSamePtr(p1, p10) && copyCompatibleType(t1, x.Type) && t1.Size() == t10.Size() && ssa.Disjoint(p10, t10, p2, t2) && ssa.Disjoint(p10, t10, p3, t3) && ssa.Disjoint(p10, t10, p4, t4) && ssa.Disjoint(p10, t10, p5, t5) && ssa.Disjoint(p10, t10, p6, t6) && ssa.Disjoint(p10, t10, p7, t7) && ssa.Disjoint(p10, t10, p8, t8) && ssa.Disjoint(p10, t10, p9, t9)) {
+			break
+		}
+		v.CopyOf(x)
+		return true
+	}
+	// match: (Load <t1> p1 (Store {t2} p2 _ (Store {t3} p3 _ (Store {t4} p4 _ (Store {t5} p5 _ (Store {t6} p6 _ (Store {t7} p7 _ (Store {t8} p8 _ (Store {t9} p9 _ (Store {t10} p10 _ (Store {t11} p11 x _)))))))))))
+	// cond: ssa.IsSamePtr(p1, p11) && copyCompatibleType(t1, x.Type) && t1.Size() == t11.Size() && ssa.Disjoint(p11, t11, p2, t2) && ssa.Disjoint(p11, t11, p3, t3) && ssa.Disjoint(p11, t11, p4, t4) && ssa.Disjoint(p11, t11, p5, t5) && ssa.Disjoint(p11, t11, p6, t6) && ssa.Disjoint(p11, t11, p7, t7) && ssa.Disjoint(p11, t11, p8, t8) && ssa.Disjoint(p11, t11, p9, t9) && ssa.Disjoint(p11, t11, p10, t10)
+	// result: x
+	for {
+		t1 := v.Type
+		p1 := v_0
+		if v_1.Op != ssaop.OpStore {
+			break
+		}
+		t2 := ssa.AuxToType(v_1.Aux)
+		_ = v_1.Args[2]
+		p2 := v_1.Args[0]
+		v_1_2 := v_1.Args[2]
+		if v_1_2.Op != ssaop.OpStore {
+			break
+		}
+		t3 := ssa.AuxToType(v_1_2.Aux)
+		_ = v_1_2.Args[2]
+		p3 := v_1_2.Args[0]
+		v_1_2_2 := v_1_2.Args[2]
+		if v_1_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t4 := ssa.AuxToType(v_1_2_2.Aux)
+		_ = v_1_2_2.Args[2]
+		p4 := v_1_2_2.Args[0]
+		v_1_2_2_2 := v_1_2_2.Args[2]
+		if v_1_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t5 := ssa.AuxToType(v_1_2_2_2.Aux)
+		_ = v_1_2_2_2.Args[2]
+		p5 := v_1_2_2_2.Args[0]
+		v_1_2_2_2_2 := v_1_2_2_2.Args[2]
+		if v_1_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t6 := ssa.AuxToType(v_1_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2.Args[2]
+		p6 := v_1_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2 := v_1_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t7 := ssa.AuxToType(v_1_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2.Args[2]
+		p7 := v_1_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2 := v_1_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t8 := ssa.AuxToType(v_1_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2.Args[2]
+		p8 := v_1_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t9 := ssa.AuxToType(v_1_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2.Args[2]
+		p9 := v_1_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t10 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2.Args[2]
+		p10 := v_1_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t11 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2.Aux)
+		x := v_1_2_2_2_2_2_2_2_2_2.Args[1]
+		p11 := v_1_2_2_2_2_2_2_2_2_2.Args[0]
+		if !(ssa.IsSamePtr(p1, p11) && copyCompatibleType(t1, x.Type) && t1.Size() == t11.Size() && ssa.Disjoint(p11, t11, p2, t2) && ssa.Disjoint(p11, t11, p3, t3) && ssa.Disjoint(p11, t11, p4, t4) && ssa.Disjoint(p11, t11, p5, t5) && ssa.Disjoint(p11, t11, p6, t6) && ssa.Disjoint(p11, t11, p7, t7) && ssa.Disjoint(p11, t11, p8, t8) && ssa.Disjoint(p11, t11, p9, t9) && ssa.Disjoint(p11, t11, p10, t10)) {
+			break
+		}
+		v.CopyOf(x)
+		return true
+	}
+	// match: (Load <t1> p1 (Store {t2} p2 _ (Store {t3} p3 _ (Store {t4} p4 _ (Store {t5} p5 _ (Store {t6} p6 _ (Store {t7} p7 _ (Store {t8} p8 _ (Store {t9} p9 _ (Store {t10} p10 _ (Store {t11} p11 _ (Store {t12} p12 x _))))))))))))
+	// cond: ssa.IsSamePtr(p1, p12) && copyCompatibleType(t1, x.Type) && t1.Size() == t12.Size() && ssa.Disjoint(p12, t12, p2, t2) && ssa.Disjoint(p12, t12, p3, t3) && ssa.Disjoint(p12, t12, p4, t4) && ssa.Disjoint(p12, t12, p5, t5) && ssa.Disjoint(p12, t12, p6, t6) && ssa.Disjoint(p12, t12, p7, t7) && ssa.Disjoint(p12, t12, p8, t8) && ssa.Disjoint(p12, t12, p9, t9) && ssa.Disjoint(p12, t12, p10, t10) && ssa.Disjoint(p12, t12, p11, t11)
+	// result: x
+	for {
+		t1 := v.Type
+		p1 := v_0
+		if v_1.Op != ssaop.OpStore {
+			break
+		}
+		t2 := ssa.AuxToType(v_1.Aux)
+		_ = v_1.Args[2]
+		p2 := v_1.Args[0]
+		v_1_2 := v_1.Args[2]
+		if v_1_2.Op != ssaop.OpStore {
+			break
+		}
+		t3 := ssa.AuxToType(v_1_2.Aux)
+		_ = v_1_2.Args[2]
+		p3 := v_1_2.Args[0]
+		v_1_2_2 := v_1_2.Args[2]
+		if v_1_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t4 := ssa.AuxToType(v_1_2_2.Aux)
+		_ = v_1_2_2.Args[2]
+		p4 := v_1_2_2.Args[0]
+		v_1_2_2_2 := v_1_2_2.Args[2]
+		if v_1_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t5 := ssa.AuxToType(v_1_2_2_2.Aux)
+		_ = v_1_2_2_2.Args[2]
+		p5 := v_1_2_2_2.Args[0]
+		v_1_2_2_2_2 := v_1_2_2_2.Args[2]
+		if v_1_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t6 := ssa.AuxToType(v_1_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2.Args[2]
+		p6 := v_1_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2 := v_1_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t7 := ssa.AuxToType(v_1_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2.Args[2]
+		p7 := v_1_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2 := v_1_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t8 := ssa.AuxToType(v_1_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2.Args[2]
+		p8 := v_1_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t9 := ssa.AuxToType(v_1_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2.Args[2]
+		p9 := v_1_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t10 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2.Args[2]
+		p10 := v_1_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t11 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2.Args[2]
+		p11 := v_1_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t12 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2.Aux)
+		x := v_1_2_2_2_2_2_2_2_2_2_2.Args[1]
+		p12 := v_1_2_2_2_2_2_2_2_2_2_2.Args[0]
+		if !(ssa.IsSamePtr(p1, p12) && copyCompatibleType(t1, x.Type) && t1.Size() == t12.Size() && ssa.Disjoint(p12, t12, p2, t2) && ssa.Disjoint(p12, t12, p3, t3) && ssa.Disjoint(p12, t12, p4, t4) && ssa.Disjoint(p12, t12, p5, t5) && ssa.Disjoint(p12, t12, p6, t6) && ssa.Disjoint(p12, t12, p7, t7) && ssa.Disjoint(p12, t12, p8, t8) && ssa.Disjoint(p12, t12, p9, t9) && ssa.Disjoint(p12, t12, p10, t10) && ssa.Disjoint(p12, t12, p11, t11)) {
+			break
+		}
+		v.CopyOf(x)
+		return true
+	}
+	// match: (Load <t1> p1 (Store {t2} p2 _ (Store {t3} p3 _ (Store {t4} p4 _ (Store {t5} p5 _ (Store {t6} p6 _ (Store {t7} p7 _ (Store {t8} p8 _ (Store {t9} p9 _ (Store {t10} p10 _ (Store {t11} p11 _ (Store {t12} p12 _ (Store {t13} p13 x _)))))))))))))
+	// cond: ssa.IsSamePtr(p1, p13) && copyCompatibleType(t1, x.Type) && t1.Size() == t13.Size() && ssa.Disjoint(p13, t13, p2, t2) && ssa.Disjoint(p13, t13, p3, t3) && ssa.Disjoint(p13, t13, p4, t4) && ssa.Disjoint(p13, t13, p5, t5) && ssa.Disjoint(p13, t13, p6, t6) && ssa.Disjoint(p13, t13, p7, t7) && ssa.Disjoint(p13, t13, p8, t8) && ssa.Disjoint(p13, t13, p9, t9) && ssa.Disjoint(p13, t13, p10, t10) && ssa.Disjoint(p13, t13, p11, t11) && ssa.Disjoint(p13, t13, p12, t12)
+	// result: x
+	for {
+		t1 := v.Type
+		p1 := v_0
+		if v_1.Op != ssaop.OpStore {
+			break
+		}
+		t2 := ssa.AuxToType(v_1.Aux)
+		_ = v_1.Args[2]
+		p2 := v_1.Args[0]
+		v_1_2 := v_1.Args[2]
+		if v_1_2.Op != ssaop.OpStore {
+			break
+		}
+		t3 := ssa.AuxToType(v_1_2.Aux)
+		_ = v_1_2.Args[2]
+		p3 := v_1_2.Args[0]
+		v_1_2_2 := v_1_2.Args[2]
+		if v_1_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t4 := ssa.AuxToType(v_1_2_2.Aux)
+		_ = v_1_2_2.Args[2]
+		p4 := v_1_2_2.Args[0]
+		v_1_2_2_2 := v_1_2_2.Args[2]
+		if v_1_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t5 := ssa.AuxToType(v_1_2_2_2.Aux)
+		_ = v_1_2_2_2.Args[2]
+		p5 := v_1_2_2_2.Args[0]
+		v_1_2_2_2_2 := v_1_2_2_2.Args[2]
+		if v_1_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t6 := ssa.AuxToType(v_1_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2.Args[2]
+		p6 := v_1_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2 := v_1_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t7 := ssa.AuxToType(v_1_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2.Args[2]
+		p7 := v_1_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2 := v_1_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t8 := ssa.AuxToType(v_1_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2.Args[2]
+		p8 := v_1_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t9 := ssa.AuxToType(v_1_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2.Args[2]
+		p9 := v_1_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t10 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2.Args[2]
+		p10 := v_1_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t11 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2.Args[2]
+		p11 := v_1_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t12 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2_2.Args[2]
+		p12 := v_1_2_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t13 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2_2.Aux)
+		x := v_1_2_2_2_2_2_2_2_2_2_2_2.Args[1]
+		p13 := v_1_2_2_2_2_2_2_2_2_2_2_2.Args[0]
+		if !(ssa.IsSamePtr(p1, p13) && copyCompatibleType(t1, x.Type) && t1.Size() == t13.Size() && ssa.Disjoint(p13, t13, p2, t2) && ssa.Disjoint(p13, t13, p3, t3) && ssa.Disjoint(p13, t13, p4, t4) && ssa.Disjoint(p13, t13, p5, t5) && ssa.Disjoint(p13, t13, p6, t6) && ssa.Disjoint(p13, t13, p7, t7) && ssa.Disjoint(p13, t13, p8, t8) && ssa.Disjoint(p13, t13, p9, t9) && ssa.Disjoint(p13, t13, p10, t10) && ssa.Disjoint(p13, t13, p11, t11) && ssa.Disjoint(p13, t13, p12, t12)) {
+			break
+		}
+		v.CopyOf(x)
+		return true
+	}
+	// match: (Load <t1> p1 (Store {t2} p2 _ (Store {t3} p3 _ (Store {t4} p4 _ (Store {t5} p5 _ (Store {t6} p6 _ (Store {t7} p7 _ (Store {t8} p8 _ (Store {t9} p9 _ (Store {t10} p10 _ (Store {t11} p11 _ (Store {t12} p12 _ (Store {t13} p13 _ (Store {t14} p14 x _))))))))))))))
+	// cond: ssa.IsSamePtr(p1, p14) && copyCompatibleType(t1, x.Type) && t1.Size() == t14.Size() && ssa.Disjoint(p14, t14, p2, t2) && ssa.Disjoint(p14, t14, p3, t3) && ssa.Disjoint(p14, t14, p4, t4) && ssa.Disjoint(p14, t14, p5, t5) && ssa.Disjoint(p14, t14, p6, t6) && ssa.Disjoint(p14, t14, p7, t7) && ssa.Disjoint(p14, t14, p8, t8) && ssa.Disjoint(p14, t14, p9, t9) && ssa.Disjoint(p14, t14, p10, t10) && ssa.Disjoint(p14, t14, p11, t11) && ssa.Disjoint(p14, t14, p12, t12) && ssa.Disjoint(p14, t14, p13, t13)
+	// result: x
+	for {
+		t1 := v.Type
+		p1 := v_0
+		if v_1.Op != ssaop.OpStore {
+			break
+		}
+		t2 := ssa.AuxToType(v_1.Aux)
+		_ = v_1.Args[2]
+		p2 := v_1.Args[0]
+		v_1_2 := v_1.Args[2]
+		if v_1_2.Op != ssaop.OpStore {
+			break
+		}
+		t3 := ssa.AuxToType(v_1_2.Aux)
+		_ = v_1_2.Args[2]
+		p3 := v_1_2.Args[0]
+		v_1_2_2 := v_1_2.Args[2]
+		if v_1_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t4 := ssa.AuxToType(v_1_2_2.Aux)
+		_ = v_1_2_2.Args[2]
+		p4 := v_1_2_2.Args[0]
+		v_1_2_2_2 := v_1_2_2.Args[2]
+		if v_1_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t5 := ssa.AuxToType(v_1_2_2_2.Aux)
+		_ = v_1_2_2_2.Args[2]
+		p5 := v_1_2_2_2.Args[0]
+		v_1_2_2_2_2 := v_1_2_2_2.Args[2]
+		if v_1_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t6 := ssa.AuxToType(v_1_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2.Args[2]
+		p6 := v_1_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2 := v_1_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t7 := ssa.AuxToType(v_1_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2.Args[2]
+		p7 := v_1_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2 := v_1_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t8 := ssa.AuxToType(v_1_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2.Args[2]
+		p8 := v_1_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t9 := ssa.AuxToType(v_1_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2.Args[2]
+		p9 := v_1_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t10 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2.Args[2]
+		p10 := v_1_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t11 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2.Args[2]
+		p11 := v_1_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t12 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2_2.Args[2]
+		p12 := v_1_2_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t13 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		p13 := v_1_2_2_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t14 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2_2_2.Aux)
+		x := v_1_2_2_2_2_2_2_2_2_2_2_2_2.Args[1]
+		p14 := v_1_2_2_2_2_2_2_2_2_2_2_2_2.Args[0]
+		if !(ssa.IsSamePtr(p1, p14) && copyCompatibleType(t1, x.Type) && t1.Size() == t14.Size() && ssa.Disjoint(p14, t14, p2, t2) && ssa.Disjoint(p14, t14, p3, t3) && ssa.Disjoint(p14, t14, p4, t4) && ssa.Disjoint(p14, t14, p5, t5) && ssa.Disjoint(p14, t14, p6, t6) && ssa.Disjoint(p14, t14, p7, t7) && ssa.Disjoint(p14, t14, p8, t8) && ssa.Disjoint(p14, t14, p9, t9) && ssa.Disjoint(p14, t14, p10, t10) && ssa.Disjoint(p14, t14, p11, t11) && ssa.Disjoint(p14, t14, p12, t12) && ssa.Disjoint(p14, t14, p13, t13)) {
+			break
+		}
+		v.CopyOf(x)
+		return true
+	}
+	// match: (Load <t1> p1 (Store {t2} p2 _ (Store {t3} p3 _ (Store {t4} p4 _ (Store {t5} p5 _ (Store {t6} p6 _ (Store {t7} p7 _ (Store {t8} p8 _ (Store {t9} p9 _ (Store {t10} p10 _ (Store {t11} p11 _ (Store {t12} p12 _ (Store {t13} p13 _ (Store {t14} p14 _ (Store {t15} p15 x _)))))))))))))))
+	// cond: ssa.IsSamePtr(p1, p15) && copyCompatibleType(t1, x.Type) && t1.Size() == t15.Size() && ssa.Disjoint(p15, t15, p2, t2) && ssa.Disjoint(p15, t15, p3, t3) && ssa.Disjoint(p15, t15, p4, t4) && ssa.Disjoint(p15, t15, p5, t5) && ssa.Disjoint(p15, t15, p6, t6) && ssa.Disjoint(p15, t15, p7, t7) && ssa.Disjoint(p15, t15, p8, t8) && ssa.Disjoint(p15, t15, p9, t9) && ssa.Disjoint(p15, t15, p10, t10) && ssa.Disjoint(p15, t15, p11, t11) && ssa.Disjoint(p15, t15, p12, t12) && ssa.Disjoint(p15, t15, p13, t13) && ssa.Disjoint(p15, t15, p14, t14)
+	// result: x
+	for {
+		t1 := v.Type
+		p1 := v_0
+		if v_1.Op != ssaop.OpStore {
+			break
+		}
+		t2 := ssa.AuxToType(v_1.Aux)
+		_ = v_1.Args[2]
+		p2 := v_1.Args[0]
+		v_1_2 := v_1.Args[2]
+		if v_1_2.Op != ssaop.OpStore {
+			break
+		}
+		t3 := ssa.AuxToType(v_1_2.Aux)
+		_ = v_1_2.Args[2]
+		p3 := v_1_2.Args[0]
+		v_1_2_2 := v_1_2.Args[2]
+		if v_1_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t4 := ssa.AuxToType(v_1_2_2.Aux)
+		_ = v_1_2_2.Args[2]
+		p4 := v_1_2_2.Args[0]
+		v_1_2_2_2 := v_1_2_2.Args[2]
+		if v_1_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t5 := ssa.AuxToType(v_1_2_2_2.Aux)
+		_ = v_1_2_2_2.Args[2]
+		p5 := v_1_2_2_2.Args[0]
+		v_1_2_2_2_2 := v_1_2_2_2.Args[2]
+		if v_1_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t6 := ssa.AuxToType(v_1_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2.Args[2]
+		p6 := v_1_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2 := v_1_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t7 := ssa.AuxToType(v_1_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2.Args[2]
+		p7 := v_1_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2 := v_1_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t8 := ssa.AuxToType(v_1_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2.Args[2]
+		p8 := v_1_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t9 := ssa.AuxToType(v_1_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2.Args[2]
+		p9 := v_1_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t10 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2.Args[2]
+		p10 := v_1_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t11 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2.Args[2]
+		p11 := v_1_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t12 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2_2.Args[2]
+		p12 := v_1_2_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t13 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		p13 := v_1_2_2_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t14 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		p14 := v_1_2_2_2_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t15 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2_2_2_2.Aux)
+		x := v_1_2_2_2_2_2_2_2_2_2_2_2_2_2.Args[1]
+		p15 := v_1_2_2_2_2_2_2_2_2_2_2_2_2_2.Args[0]
+		if !(ssa.IsSamePtr(p1, p15) && copyCompatibleType(t1, x.Type) && t1.Size() == t15.Size() && ssa.Disjoint(p15, t15, p2, t2) && ssa.Disjoint(p15, t15, p3, t3) && ssa.Disjoint(p15, t15, p4, t4) && ssa.Disjoint(p15, t15, p5, t5) && ssa.Disjoint(p15, t15, p6, t6) && ssa.Disjoint(p15, t15, p7, t7) && ssa.Disjoint(p15, t15, p8, t8) && ssa.Disjoint(p15, t15, p9, t9) && ssa.Disjoint(p15, t15, p10, t10) && ssa.Disjoint(p15, t15, p11, t11) && ssa.Disjoint(p15, t15, p12, t12) && ssa.Disjoint(p15, t15, p13, t13) && ssa.Disjoint(p15, t15, p14, t14)) {
+			break
+		}
+		v.CopyOf(x)
+		return true
+	}
+	// match: (Load <t1> p1 (Store {t2} p2 _ (Store {t3} p3 _ (Store {t4} p4 _ (Store {t5} p5 _ (Store {t6} p6 _ (Store {t7} p7 _ (Store {t8} p8 _ (Store {t9} p9 _ (Store {t10} p10 _ (Store {t11} p11 _ (Store {t12} p12 _ (Store {t13} p13 _ (Store {t14} p14 _ (Store {t15} p15 _ (Store {t16} p16 x _))))))))))))))))
+	// cond: ssa.IsSamePtr(p1, p16) && copyCompatibleType(t1, x.Type) && t1.Size() == t16.Size() && ssa.Disjoint(p16, t16, p2, t2) && ssa.Disjoint(p16, t16, p3, t3) && ssa.Disjoint(p16, t16, p4, t4) && ssa.Disjoint(p16, t16, p5, t5) && ssa.Disjoint(p16, t16, p6, t6) && ssa.Disjoint(p16, t16, p7, t7) && ssa.Disjoint(p16, t16, p8, t8) && ssa.Disjoint(p16, t16, p9, t9) && ssa.Disjoint(p16, t16, p10, t10) && ssa.Disjoint(p16, t16, p11, t11) && ssa.Disjoint(p16, t16, p12, t12) && ssa.Disjoint(p16, t16, p13, t13) && ssa.Disjoint(p16, t16, p14, t14) && ssa.Disjoint(p16, t16, p15, t15)
+	// result: x
+	for {
+		t1 := v.Type
+		p1 := v_0
+		if v_1.Op != ssaop.OpStore {
+			break
+		}
+		t2 := ssa.AuxToType(v_1.Aux)
+		_ = v_1.Args[2]
+		p2 := v_1.Args[0]
+		v_1_2 := v_1.Args[2]
+		if v_1_2.Op != ssaop.OpStore {
+			break
+		}
+		t3 := ssa.AuxToType(v_1_2.Aux)
+		_ = v_1_2.Args[2]
+		p3 := v_1_2.Args[0]
+		v_1_2_2 := v_1_2.Args[2]
+		if v_1_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t4 := ssa.AuxToType(v_1_2_2.Aux)
+		_ = v_1_2_2.Args[2]
+		p4 := v_1_2_2.Args[0]
+		v_1_2_2_2 := v_1_2_2.Args[2]
+		if v_1_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t5 := ssa.AuxToType(v_1_2_2_2.Aux)
+		_ = v_1_2_2_2.Args[2]
+		p5 := v_1_2_2_2.Args[0]
+		v_1_2_2_2_2 := v_1_2_2_2.Args[2]
+		if v_1_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t6 := ssa.AuxToType(v_1_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2.Args[2]
+		p6 := v_1_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2 := v_1_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t7 := ssa.AuxToType(v_1_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2.Args[2]
+		p7 := v_1_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2 := v_1_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t8 := ssa.AuxToType(v_1_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2.Args[2]
+		p8 := v_1_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t9 := ssa.AuxToType(v_1_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2.Args[2]
+		p9 := v_1_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t10 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2.Args[2]
+		p10 := v_1_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t11 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2.Args[2]
+		p11 := v_1_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t12 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2_2.Args[2]
+		p12 := v_1_2_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t13 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		p13 := v_1_2_2_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t14 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		p14 := v_1_2_2_2_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t15 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		p15 := v_1_2_2_2_2_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t16 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2.Aux)
+		x := v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2.Args[1]
+		p16 := v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2.Args[0]
+		if !(ssa.IsSamePtr(p1, p16) && copyCompatibleType(t1, x.Type) && t1.Size() == t16.Size() && ssa.Disjoint(p16, t16, p2, t2) && ssa.Disjoint(p16, t16, p3, t3) && ssa.Disjoint(p16, t16, p4, t4) && ssa.Disjoint(p16, t16, p5, t5) && ssa.Disjoint(p16, t16, p6, t6) && ssa.Disjoint(p16, t16, p7, t7) && ssa.Disjoint(p16, t16, p8, t8) && ssa.Disjoint(p16, t16, p9, t9) && ssa.Disjoint(p16, t16, p10, t10) && ssa.Disjoint(p16, t16, p11, t11) && ssa.Disjoint(p16, t16, p12, t12) && ssa.Disjoint(p16, t16, p13, t13) && ssa.Disjoint(p16, t16, p14, t14) && ssa.Disjoint(p16, t16, p15, t15)) {
+			break
+		}
+		v.CopyOf(x)
+		return true
+	}
+	// match: (Load <t1> p1 (Store {t2} p2 _ (Store {t3} p3 _ (Store {t4} p4 _ (Store {t5} p5 _ (Store {t6} p6 _ (Store {t7} p7 _ (Store {t8} p8 _ (Store {t9} p9 _ (Store {t10} p10 _ (Store {t11} p11 _ (Store {t12} p12 _ (Store {t13} p13 _ (Store {t14} p14 _ (Store {t15} p15 _ (Store {t16} p16 _ (Store {t17} p17 x _)))))))))))))))))
+	// cond: ssa.IsSamePtr(p1, p17) && copyCompatibleType(t1, x.Type) && t1.Size() == t17.Size() && ssa.Disjoint(p17, t17, p2, t2) && ssa.Disjoint(p17, t17, p3, t3) && ssa.Disjoint(p17, t17, p4, t4) && ssa.Disjoint(p17, t17, p5, t5) && ssa.Disjoint(p17, t17, p6, t6) && ssa.Disjoint(p17, t17, p7, t7) && ssa.Disjoint(p17, t17, p8, t8) && ssa.Disjoint(p17, t17, p9, t9) && ssa.Disjoint(p17, t17, p10, t10) && ssa.Disjoint(p17, t17, p11, t11) && ssa.Disjoint(p17, t17, p12, t12) && ssa.Disjoint(p17, t17, p13, t13) && ssa.Disjoint(p17, t17, p14, t14) && ssa.Disjoint(p17, t17, p15, t15) && ssa.Disjoint(p17, t17, p16, t16)
+	// result: x
+	for {
+		t1 := v.Type
+		p1 := v_0
+		if v_1.Op != ssaop.OpStore {
+			break
+		}
+		t2 := ssa.AuxToType(v_1.Aux)
+		_ = v_1.Args[2]
+		p2 := v_1.Args[0]
+		v_1_2 := v_1.Args[2]
+		if v_1_2.Op != ssaop.OpStore {
+			break
+		}
+		t3 := ssa.AuxToType(v_1_2.Aux)
+		_ = v_1_2.Args[2]
+		p3 := v_1_2.Args[0]
+		v_1_2_2 := v_1_2.Args[2]
+		if v_1_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t4 := ssa.AuxToType(v_1_2_2.Aux)
+		_ = v_1_2_2.Args[2]
+		p4 := v_1_2_2.Args[0]
+		v_1_2_2_2 := v_1_2_2.Args[2]
+		if v_1_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t5 := ssa.AuxToType(v_1_2_2_2.Aux)
+		_ = v_1_2_2_2.Args[2]
+		p5 := v_1_2_2_2.Args[0]
+		v_1_2_2_2_2 := v_1_2_2_2.Args[2]
+		if v_1_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t6 := ssa.AuxToType(v_1_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2.Args[2]
+		p6 := v_1_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2 := v_1_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t7 := ssa.AuxToType(v_1_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2.Args[2]
+		p7 := v_1_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2 := v_1_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t8 := ssa.AuxToType(v_1_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2.Args[2]
+		p8 := v_1_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t9 := ssa.AuxToType(v_1_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2.Args[2]
+		p9 := v_1_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t10 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2.Args[2]
+		p10 := v_1_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t11 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2.Args[2]
+		p11 := v_1_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t12 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2_2.Args[2]
+		p12 := v_1_2_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t13 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		p13 := v_1_2_2_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t14 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		p14 := v_1_2_2_2_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t15 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		p15 := v_1_2_2_2_2_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t16 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2.Aux)
+		_ = v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		p16 := v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2.Args[0]
+		v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2 := v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2.Args[2]
+		if v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2.Op != ssaop.OpStore {
+			break
+		}
+		t17 := ssa.AuxToType(v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2.Aux)
+		x := v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2.Args[1]
+		p17 := v_1_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2.Args[0]
+		if !(ssa.IsSamePtr(p1, p17) && copyCompatibleType(t1, x.Type) && t1.Size() == t17.Size() && ssa.Disjoint(p17, t17, p2, t2) && ssa.Disjoint(p17, t17, p3, t3) && ssa.Disjoint(p17, t17, p4, t4) && ssa.Disjoint(p17, t17, p5, t5) && ssa.Disjoint(p17, t17, p6, t6) && ssa.Disjoint(p17, t17, p7, t7) && ssa.Disjoint(p17, t17, p8, t8) && ssa.Disjoint(p17, t17, p9, t9) && ssa.Disjoint(p17, t17, p10, t10) && ssa.Disjoint(p17, t17, p11, t11) && ssa.Disjoint(p17, t17, p12, t12) && ssa.Disjoint(p17, t17, p13, t13) && ssa.Disjoint(p17, t17, p14, t14) && ssa.Disjoint(p17, t17, p15, t15) && ssa.Disjoint(p17, t17, p16, t16)) {
+			break
+		}
+		v.CopyOf(x)
+		return true
+	}
 	// match: (Load <t1> op1:(OffPtr [o1] p1) move:(Move [n] p2 src mem))
 	// cond: o1 >= 0 && o1+t1.Size() <= n && ssa.IsSamePtr(p1, p2) && !ssa.IsVolatile(src)
 	// result: @move.Block (Load <t1> (OffPtr <op1.Type> [o1] src) mem)
@@ -16851,6 +17865,37 @@ func rewriteValue_OpLsh64x64(v *ssa.Value) bool {
 		v.Reset(ssaop.OpAnd64)
 		v0 := b.NewValue0(v.Pos, ssaop.OpConst64, v.Type)
 		v0.AuxInt = ssa.Int64ToAuxInt(int64(-1) << c)
+		v.AddArg2(x, v0)
+		return true
+	}
+	// match: (Lsh64x64 (ZeroExt8to64 (Trunc64to8 (Rsh64Ux64 x (Const64 [c])))) (Const64 [c]))
+	// cond: c > 0 && c <= 56
+	// result: (And64 x (Const64 <v.Type> [int64(0xff) << c]))
+	for {
+		if v_0.Op != ssaop.OpZeroExt8to64 {
+			break
+		}
+		v_0_0 := v_0.Args[0]
+		if v_0_0.Op != ssaop.OpTrunc64to8 {
+			break
+		}
+		v_0_0_0 := v_0_0.Args[0]
+		if v_0_0_0.Op != ssaop.OpRsh64Ux64 {
+			break
+		}
+		_ = v_0_0_0.Args[1]
+		x := v_0_0_0.Args[0]
+		v_0_0_0_1 := v_0_0_0.Args[1]
+		if v_0_0_0_1.Op != ssaop.OpConst64 {
+			break
+		}
+		c := ssa.AuxIntToInt64(v_0_0_0_1.AuxInt)
+		if v_1.Op != ssaop.OpConst64 || ssa.AuxIntToInt64(v_1.AuxInt) != c || !(c > 0 && c <= 56) {
+			break
+		}
+		v.Reset(ssaop.OpAnd64)
+		v0 := b.NewValue0(v.Pos, ssaop.OpConst64, v.Type)
+		v0.AuxInt = ssa.Int64ToAuxInt(int64(0xff) << c)
 		v.AddArg2(x, v0)
 		return true
 	}
@@ -25374,6 +26419,123 @@ func rewriteValue_OpOr64(v *ssa.Value) bool {
 					continue
 				}
 				v.CopyOf(x)
+				return true
+			}
+		}
+		break
+	}
+	// match: (Or64 (ZeroExt8to64 (Trunc64to8 x)) (And64 x (Const64 [m])))
+	// cond: m&0xff == 0
+	// result: (And64 x (Const64 <v.Type> [m|0xff]))
+	for {
+		for _i0 := 0; _i0 <= 1; _i0, v_0, v_1 = _i0+1, v_1, v_0 {
+			if v_0.Op != ssaop.OpZeroExt8to64 {
+				continue
+			}
+			v_0_0 := v_0.Args[0]
+			if v_0_0.Op != ssaop.OpTrunc64to8 {
+				continue
+			}
+			x := v_0_0.Args[0]
+			if v_1.Op != ssaop.OpAnd64 {
+				continue
+			}
+			_ = v_1.Args[1]
+			v_1_0 := v_1.Args[0]
+			v_1_1 := v_1.Args[1]
+			for _i1 := 0; _i1 <= 1; _i1, v_1_0, v_1_1 = _i1+1, v_1_1, v_1_0 {
+				if x != v_1_0 || v_1_1.Op != ssaop.OpConst64 {
+					continue
+				}
+				m := ssa.AuxIntToInt64(v_1_1.AuxInt)
+				if !(m&0xff == 0) {
+					continue
+				}
+				v.Reset(ssaop.OpAnd64)
+				v0 := b.NewValue0(v.Pos, ssaop.OpConst64, v.Type)
+				v0.AuxInt = ssa.Int64ToAuxInt(m | 0xff)
+				v.AddArg2(x, v0)
+				return true
+			}
+		}
+		break
+	}
+	// match: (Or64 (And64 x (Const64 [c1])) (And64 x (Const64 [c2])))
+	// result: (And64 x (Const64 <v.Type> [c1|c2]))
+	for {
+		for _i0 := 0; _i0 <= 1; _i0, v_0, v_1 = _i0+1, v_1, v_0 {
+			if v_0.Op != ssaop.OpAnd64 {
+				continue
+			}
+			_ = v_0.Args[1]
+			v_0_0 := v_0.Args[0]
+			v_0_1 := v_0.Args[1]
+			for _i1 := 0; _i1 <= 1; _i1, v_0_0, v_0_1 = _i1+1, v_0_1, v_0_0 {
+				x := v_0_0
+				if v_0_1.Op != ssaop.OpConst64 {
+					continue
+				}
+				c1 := ssa.AuxIntToInt64(v_0_1.AuxInt)
+				if v_1.Op != ssaop.OpAnd64 {
+					continue
+				}
+				_ = v_1.Args[1]
+				v_1_0 := v_1.Args[0]
+				v_1_1 := v_1.Args[1]
+				for _i2 := 0; _i2 <= 1; _i2, v_1_0, v_1_1 = _i2+1, v_1_1, v_1_0 {
+					if x != v_1_0 || v_1_1.Op != ssaop.OpConst64 {
+						continue
+					}
+					c2 := ssa.AuxIntToInt64(v_1_1.AuxInt)
+					v.Reset(ssaop.OpAnd64)
+					v0 := b.NewValue0(v.Pos, ssaop.OpConst64, v.Type)
+					v0.AuxInt = ssa.Int64ToAuxInt(c1 | c2)
+					v.AddArg2(x, v0)
+					return true
+				}
+			}
+		}
+		break
+	}
+	// match: (Or64 (Lsh64x64 (Rsh64Ux64 x (Const64 [c])) (Const64 [c])) (And64 x (Const64 [m])))
+	// cond: c >= 0 && c < 64
+	// result: (And64 x (Const64 <v.Type> [m | int64(-1) << c]))
+	for {
+		for _i0 := 0; _i0 <= 1; _i0, v_0, v_1 = _i0+1, v_1, v_0 {
+			if v_0.Op != ssaop.OpLsh64x64 {
+				continue
+			}
+			_ = v_0.Args[1]
+			v_0_0 := v_0.Args[0]
+			if v_0_0.Op != ssaop.OpRsh64Ux64 {
+				continue
+			}
+			_ = v_0_0.Args[1]
+			x := v_0_0.Args[0]
+			v_0_0_1 := v_0_0.Args[1]
+			if v_0_0_1.Op != ssaop.OpConst64 {
+				continue
+			}
+			c := ssa.AuxIntToInt64(v_0_0_1.AuxInt)
+			v_0_1 := v_0.Args[1]
+			if v_0_1.Op != ssaop.OpConst64 || ssa.AuxIntToInt64(v_0_1.AuxInt) != c || v_1.Op != ssaop.OpAnd64 {
+				continue
+			}
+			_ = v_1.Args[1]
+			v_1_0 := v_1.Args[0]
+			v_1_1 := v_1.Args[1]
+			for _i1 := 0; _i1 <= 1; _i1, v_1_0, v_1_1 = _i1+1, v_1_1, v_1_0 {
+				if x != v_1_0 || v_1_1.Op != ssaop.OpConst64 {
+					continue
+				}
+				m := ssa.AuxIntToInt64(v_1_1.AuxInt)
+				if !(c >= 0 && c < 64) {
+					continue
+				}
+				v.Reset(ssaop.OpAnd64)
+				v0 := b.NewValue0(v.Pos, ssaop.OpConst64, v.Type)
+				v0.AuxInt = ssa.Int64ToAuxInt(m | int64(-1)<<c)
+				v.AddArg2(x, v0)
 				return true
 			}
 		}
